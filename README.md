@@ -8,6 +8,9 @@ Contents:
 
 - [Requirements](#requirements)
 - [Usage](#usage)
+  - [Changing the recorded display](#changing-the-recorded-display)
+  - [Stopping the recording](#stopping-the-recording)
+  - [Further options](#further-options)
 - [License](#license)
 
 ## Requirements
@@ -24,6 +27,24 @@ Contents:
 This will capture the screen with a default framerate of 25 fps and save to `recording-<datetime>.mkv` in your current directory. The capture will have the local timestamp embedded at the bottom left.
 
 By default, the `DISPLAY` environment variable is used to determine the display to capture.
+
+### Changing the recorded display
+
+If you want to record another display, call:
+
+```bash
+DISPLAY=:1234 ./ffmpeg-screen-capture.sh
+```
+
+### Stopping the recording
+
+When the recording is running, press `q` to stop. You can optionally also pass a time in seconds after which the recording will stop automatically:
+
+```bash
+./ffmpeg-screen-capture.sh -t 60
+```
+
+### Further options
 
 See `ffmpeg-screen-capture.sh -h` for more options.
 
