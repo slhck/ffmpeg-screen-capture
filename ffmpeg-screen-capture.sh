@@ -59,7 +59,7 @@ boxHeight=$((fontSize+padding))
 boxWidth=$((fontSize*15))
 
 outputDir="$PWD"
-output="recording-$(date +%Y-%m-%d-%H-%M-%S).mkv"
+output="recording-$(date +%Y%m%d-%H%M%S).mkv"
 outputTime=""
 
 # ==============================================================================
