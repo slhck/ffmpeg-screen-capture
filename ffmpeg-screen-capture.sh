@@ -19,8 +19,6 @@ set -e
 # ==============================================================================
 # Checks
 
-cd "$(dirname "$0")" || exit 1
-
 for cmd in xrandr ffmpeg; do
   if ! command -v "$cmd" >/dev/null 2>&1; then
     echo "Error: '$cmd' is not installed."
@@ -64,6 +62,7 @@ if [ $boxWidth -gt $outWidth ]; then
   boxWidth=$outWidth
 fi
 
+outputDir="$PWD"
 output="recording-$(date +%Y-%m-%d-%H-%M-%S).mkv"
 outputTime=""
 
@@ -85,6 +84,7 @@ usage() {
   echo
   echo "  Output:"
   echo "    -o, --output-file <output>      Output file (default: $output)"
+  echo "    -d, --output-dir <outputDir>    Output dir (default: $outputDir)"
   echo "    -t, --output-time <outputTime>  Output time (default: none)"
   echo
   echo "  Encoding:"
@@ -116,6 +116,10 @@ while [ $# -gt 0 ]; do
       ;;
     -o|--output-file)
       output="$2"
+      shift 2
+      ;;
+    -d|--output-dir)
+      outputDir="$2"
       shift 2
       ;;
     -t|--output-time)
@@ -156,6 +160,7 @@ echo "  fontSize:   $fontSize"
 echo "  boxHeight:  $boxHeight"
 echo "  boxWidth:   $boxWidth"
 echo "  output:     $output"
+echo "  outputDir:  $outputDir"
 echo "  outputTime: $outputTime"
 echo
 
@@ -165,6 +170,8 @@ echo
 if [ -n "$outputTime" ]; then
   outputTime="-t $outputTime"
 fi
+
+outputFile="$outputDir/$output"
 
 set -x
 
@@ -181,7 +188,7 @@ ffmpeg \
   -crf "$quality" \
   -preset "$preset" \
   $outputTime \
-  "$output"
+  "$outputFile"
 
 set +x
 
