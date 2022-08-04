@@ -6,10 +6,11 @@
 #
 # License: MIT
 #
-# Version: 1.2.0
+# Version: 1.2.1
 #
 # History of changes:
 #
+# - 1.2.1: Remove bc dependency
 # - 1.2.0: Add option for maximum time
 # - 1.1.0: Set default output size to input size, and use 25 fps
 # - 1.0.0: Initial release.
@@ -43,9 +44,7 @@ fi
 
 inputFps=25
 # calculate aspect ratio by dividing the input size which is a string of the form "WxH" by the width
-aspectRatio=$(echo "$inputSize" | awk -Fx '{print $1/$2}')
 outHeight=${inputSize#*x}
-outWidth=$(echo "$outHeight * $aspectRatio" | bc | awk '{printf "%d", $1}')
 padding=10
 quality=23
 preset=faster
@@ -58,9 +57,6 @@ fi
 
 boxHeight=$((fontSize+padding))
 boxWidth=$((fontSize*15))
-if [ $boxWidth -gt $outWidth ]; then
-  boxWidth=$outWidth
-fi
 
 outputDir="$PWD"
 output="recording-$(date +%Y-%m-%d-%H-%M-%S).mkv"
@@ -181,7 +177,7 @@ ffmpeg \
     settb=AVTB,
     setpts='trunc(PTS/1K)*1K+st(1,trunc(RTCTIME/1K))-1K*trunc(ld(1)/1K)',
     scale=-2:${outHeight},
-    drawbox=x=0:y=ih-h:color=black@0.4:width=${boxWidth}:height=${boxHeight}:t=fill,
+    drawbox=x=0:y=ih-h:color=black@0.4:width=min(iw\,${boxWidth}):height=${boxHeight}:t=fill,
     drawtext=text='%{localtime}.%{eif\:1M*t-1K*trunc(t*1K)\:d}':fontcolor=white:fontsize=${fontSize}:x=${padding}:y=h-th-${padding},
     format=yuv420p" \
   -c:v libx264 \
