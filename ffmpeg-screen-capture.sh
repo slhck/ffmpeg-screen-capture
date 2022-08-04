@@ -31,7 +31,7 @@ done
 # ==============================================================================
 # fetch the display resolution of $DISPLAY with x11
 
-DISPLAY="${DISPLAY:-:0}"
+display=""
 inputSize=$(xrandr --display "$DISPLAY" 2>/dev/null | tail -n 1 | awk '{print $1}')
 
 if [ -z "$inputSize" ]; then
@@ -73,11 +73,12 @@ outputTime=""
 usage() {
   echo "Usage: $0 [options]"
   echo
-  echo "Record the display at \$DISPLAY and save to file."
+  echo "Record the display and save to file with timestamp overlay."
   echo
   echo "Options:"
   echo
   echo "  Input:"
+  echo "    -d, --display <display>         Input display (default: \$DISPLAY)"
   echo "    -s, --input-size <size>         Input size (default: $inputSize)"
   echo "    -r, --input-fps <fps>           Input fps (default: $inputFps)"
   echo "    --text-padding <padding>        Padding (default: $padding)"
@@ -98,6 +99,10 @@ usage() {
 
 while [ $# -gt 0 ]; do
   case "$1" in
+    -d|--display)
+      display="$2"
+      shift 2
+      ;;
     -s|--input-size)
       inputSize="$2"
       shift 2
@@ -146,8 +151,13 @@ while [ $# -gt 0 ]; do
   esac
 done
 
+if [ -z "$display" ]; then
+  display="${DISPLAY:-:0}"
+fi
+
 echo "Settings: "
 echo
+echo "  display:    $display"
 echo "  inputSize:  $inputSize"
 echo "  inputFps:   $inputFps"
 echo "  outHeight:  $outHeight"

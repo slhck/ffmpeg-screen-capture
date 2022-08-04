@@ -23,7 +23,7 @@ Contents:
 
 This will capture the screen with a default framerate of 25 fps and save to `recording-<date>.mkv`. The capture will have the local timestamp embedded at the bottom left.
 
-By default, the `DISPLAY` environment variable is used to determine the display to capture.
+By default, the `DISPLAY` environment variable is used to determine the display to capture. Specify a different display with `--display`.
 
 See `ffmpeg-screen-capture.sh -h` for more options.
 
