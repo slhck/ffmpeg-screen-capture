@@ -21,7 +21,7 @@ Contents:
 ./ffmpeg-screen-capture.sh
 ```
 
-This will capture the screen with a default framerate of 25 fps and save to `recording-<date>.mkv` in your current directory. The capture will have the local timestamp embedded at the bottom left.
+This will capture the screen with a default framerate of 25 fps and save to `recording-<datetime>.mkv` in your current directory. The capture will have the local timestamp embedded at the bottom left.
 
 By default, the `DISPLAY` environment variable is used to determine the display to capture.
 
