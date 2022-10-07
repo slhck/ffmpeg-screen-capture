@@ -30,6 +30,8 @@ By default, the `DISPLAY` environment variable is used to determine the display 
 
 The progress will be printed on stdout; ffmpeg logs are printed on stderr.
 
+**Note:** This is very opinionated and nothing more than a shell script calling ffmpeg with a filter. Many options that you might need are missing. If you need more options, you should probably use ffmpeg directly.
+
 ### Changing the recorded display
 
 If you want to record another display, call:

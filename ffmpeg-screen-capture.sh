@@ -6,10 +6,11 @@
 #
 # License: MIT
 #
-# Version: 1.3.0
+# Version: 1.3.1
 #
 # History of changes:
 #
+# - 1.3.1: Exec the command to allow stdin redirection
 # - 1.3.0: Output progress
 # - 1.2.1: Remove bc dependency
 # - 1.2.0: Add option for maximum time
@@ -170,9 +171,7 @@ fi
 
 outputFile="$outputDir/$output"
 
-set -x
-
-ffmpeg \
+exec ffmpeg \
   -f x11grab -framerate "$inputFps" -video_size "$inputSize" -i "$DISPLAY" \
   -filter:v "
     settb=AVTB,
@@ -183,11 +182,8 @@ ffmpeg \
     format=yuv420p" \
   -c:v libx264 \
   -crf "$quality" \
+  -g 1 \
   -preset "$preset" \
   $outputTime \
   -progress - -nostats \
   "$outputFile"
-
-set +x
-
-echo "Done! Recording at: $output"
