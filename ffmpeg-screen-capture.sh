@@ -6,10 +6,11 @@
 #
 # License: MIT
 #
-# Version: 1.2.1
+# Version: 1.3.0
 #
 # History of changes:
 #
+# - 1.3.0: Output progress
 # - 1.2.1: Remove bc dependency
 # - 1.2.0: Add option for maximum time
 # - 1.1.0: Set default output size to input size, and use 25 fps
@@ -184,6 +185,7 @@ ffmpeg \
   -crf "$quality" \
   -preset "$preset" \
   $outputTime \
+  -progress - -nostats \
   "$outputFile"
 
 set +x

@@ -28,6 +28,8 @@ This will capture the screen with a default framerate of 25 fps and save to `rec
 
 By default, the `DISPLAY` environment variable is used to determine the display to capture.
 
+The progress will be printed on stdout; ffmpeg logs are printed on stderr.
+
 ### Changing the recorded display
 
 If you want to record another display, call:
